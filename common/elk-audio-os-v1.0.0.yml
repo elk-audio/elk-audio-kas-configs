@@ -1,0 +1,79 @@
+# KAS project file
+# ELK Audio OS version: 1.0.0
+header:
+  version: 13
+
+repos:
+  meta-elk:
+    url: https://github.com/elk-audio/meta-elk.git
+    refspec: 617023192ad018277fb9d91e4323ac129fa00367
+    path: layers/meta-elk
+  meta-swupdate:
+    url: https://github.com/sbabic/meta-swupdate
+    refspec: 58878bb980877f51b607d71c3648bd479d68e2a5
+    path: layers/meta-swupdate
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    refspec: df452d9d98659b49888fa8a5428a0a8bd3e3aaec
+    path: layers/meta-openembedded
+    layers:
+      meta-oe:
+      meta-python:
+      meta-networking:
+      meta-filesystems:
+  poky:
+    url: https://git.yoctoproject.org/git/poky
+    refspec: 75239ddd8d67c00139c6e88c1c2a790b471b12c5
+    path: layers/meta-poky
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+distro: elk
+target: unset
+machine: unset
+
+bblayers_conf_header:
+    custom-bblayers-conf: |
+        POKY_BBLAYERS_CONF_VERSION = "2"
+
+local_conf_header:
+  elk-audio-os: |
+    DL_DIR ?= "${TOPDIR}/../downloads"
+    ELK_AUDIO_OS_VERSION = "1.0.0"
+    PACKAGE_CLASSES ?= "package_ipk"
+    EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+    USER_CLASSES ?= "buildstats"
+    PATCHRESOLVE = "noop"
+    BB_DISKMON_DIRS ??= "\
+      STOPTASKS,${TMPDIR},1G,100K \
+      STOPTASKS,${DL_DIR},1G,100K \
+      STOPTASKS,${SSTATE_DIR},1G,100K \
+      STOPTASKS,/tmp,100M,100K \
+      ABORT,${TMPDIR},100M,1K \
+      ABORT,${DL_DIR},100M,1K \
+      ABORT,${SSTATE_DIR},100M,1K \
+      ABORT,/tmp,10M,1K"
+    do_image_complete[deptask] += "do_populate_lic"
+    PACKAGECONFIG:append:pn-qemu-native = " sdl"
+    PACKAGECONFIG:append:pn-nativesdk-qemu = " sdl"
+    CONF_VERSION = "1"
+    SECURITY_STRINGFORMAT = "-Wformat -Wformat-security"
+    INHERIT += "rm_work"
+    LICENSE_FLAGS_ACCEPTED += "commercial"
+ 
+    # By default, mda-vst2 plugins are not installed in the image and SUSHI will not
+    # have VST2 support enabled. If you have access to the VST2 SDK you can enable
+    # both by setting the variable VST2SDK_PATH to the path of the vst2 sdk as
+    # follows:
+    # VST2SDK_PATH = "path/to/the/vst2sdk/in/your/build/machine/"
+    # For example : VST2SDK_PATH = "/home/user/vstsdk2.4"
+    # To disable VST2 support, just define `VST2SDK_PATH` as an empty string.
+    VST2SDK_PATH = ""
+    #
+    # To generate sdk with x11 libs
+    #IMAGE_INSTALL:append = " packagegroup-core-x11 \
+    # libxcursor libxcursor-dev \
+    # libxinerama libxinerama-dev \
+    # "
