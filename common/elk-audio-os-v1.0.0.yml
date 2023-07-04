@@ -6,15 +6,15 @@ header:
 repos:
   meta-elk:
     url: https://github.com/elk-audio/meta-elk.git
-    refspec: 617023192ad018277fb9d91e4323ac129fa00367
+    commit: 617023192ad018277fb9d91e4323ac129fa00367
     path: layers/meta-elk
   meta-swupdate:
     url: https://github.com/sbabic/meta-swupdate
-    refspec: 58878bb980877f51b607d71c3648bd479d68e2a5
+    commit: 58878bb980877f51b607d71c3648bd479d68e2a5
     path: layers/meta-swupdate
   meta-openembedded:
     url: https://git.openembedded.org/meta-openembedded
-    refspec: df452d9d98659b49888fa8a5428a0a8bd3e3aaec
+    commit: df452d9d98659b49888fa8a5428a0a8bd3e3aaec
     path: layers/meta-openembedded
     layers:
       meta-oe:
@@ -23,7 +23,7 @@ repos:
       meta-filesystems:
   poky:
     url: https://git.yoctoproject.org/git/poky
-    refspec: 75239ddd8d67c00139c6e88c1c2a790b471b12c5
+    commit: 75239ddd8d67c00139c6e88c1c2a790b471b12c5
     path: layers/meta-poky
     layers:
       meta:

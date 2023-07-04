@@ -1,6 +1,6 @@
 # KAS project file
 header:
-  version: 13
+  version: 14
   includes:
     - common/elk-audio-os-v1.0.0.yml
 
@@ -10,15 +10,15 @@ target: elkpi-audio-os-image
 repos:
   meta-elkpi:
     url: https://github.com/elk-audio/meta-elkpi.git
-    refspec: a262b989b6325250c41073fa7113df1b7364a2d5
+    commit: a262b989b6325250c41073fa7113df1b7364a2d5
     path: layers/meta-elkpi
   meta-raspberrypi-elk:
     url: https://github.com/elk-audio/meta-raspberrypi-elk.git
-    refspec: 10ca6cae920cd879fe173ca9f05156f1c9f83521
+    commit: 10ca6cae920cd879fe173ca9f05156f1c9f83521
     path: layers/meta-raspberrypi-elk
   meta-raspberrypi:
     url: https://github.com/agherzan/meta-raspberrypi.git
-    refspec: 2a06e4e84b04fc900f3a4524581548c9b5e57362
+    commit: 2a06e4e84b04fc900f3a4524581548c9b5e57362
     path: layers/meta-raspberrypi
 
 local_conf_header:
