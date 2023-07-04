@@ -2,7 +2,7 @@
 header:
   version: 13
   includes:
-    - ../common/elk-audio-os-v1.0.0.yml
+    - common/elk-audio-os-v1.0.0.yml
 
 machine: raspberrypi4-64
 target: elkpi-audio-os-image
