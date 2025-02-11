@@ -1,0 +1,41 @@
+# KAS project file
+header:
+  version: 14
+  includes:
+    - common/elk-audio-os-v1.1.0.yml
+
+machine: raspberrypi4-64
+target: elkpi-audio-os-image
+
+repos:
+  meta-elkpi:
+    url: https://github.com/elk-audio/meta-elkpi.git
+    commit: bcbafef8484df6fa4a881cffa8475408b3d2e2da
+    path: layers/meta-elkpi
+  meta-raspberrypi-elk:
+    url: https://github.com/elk-audio/meta-raspberrypi-elk.git
+    commit: ace29fadf4a0299b7d2ce76c7e4b95485a24d91f
+    path: layers/meta-raspberrypi-elk
+  meta-raspberrypi:
+    url: https://github.com/agherzan/meta-raspberrypi.git
+    commit: 6df7e028a2b7b2d8cab0745dc0ed2eebc3742a17
+    path: layers/meta-raspberrypi
+
+local_conf_header:
+  elkpi-conf: |
+    SWU_VERSION = "1.1.0"
+    RPI_KERNEL_DEVICETREE:remove = "broadcom/bcm2711-rpi-400.dtb broadcom/bcm2711-rpi-cm4.dtb"
+    RPI_KERNEL_DEVICETREE_OVERLAYS:remove = "overlays/vc4-kms-dsi-7inch.dtbo"
+    ENABLE_I2C = "1"
+    KERNEL_MODULE_AUTOLOAD:rpi += "i2c-dev"
+    ENABLE_UART = "1"
+    SERIAL_CONSOLES = "57600;ttyS0"
+    RPI_USE_U_BOOT = "1"
+    EXTRA_IMAGE_FEATURES += "debug-tweaks ssh-server-openssh package-management"
+    DISTRO_FEATURES += "user-autostart-service"
+    hostname:pn-base-files = "elk-pi"
+
+    # Comment the following for qt image
+    BBMASK += "meta-elkpi/recipes-images/images/elkpi-audio-os-image-qt.bb"
+    BBMASK += "meta-elk/recipes-qt/simple-qt/simple-qt_0.1.bb"
+    BBMASK += "meta-elk/recipes-qt/qt/qtbase_git.bbappend"

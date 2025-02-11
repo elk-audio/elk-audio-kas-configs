@@ -1,0 +1,77 @@
+# KAS project file
+# ELK Audio OS version: 1.1.0
+header:
+  version: 13
+
+repos:
+  meta-elk:
+    url: https://github.com/elk-audio/meta-elk.git
+    commit: fca487f15730d1fd35c4308598ff7f0adf57d96e
+    path: layers/meta-elk
+  meta-swupdate:
+    url: https://github.com/sbabic/meta-swupdate
+    commit: 4a65b1ed36c0b6ee4942d5f23c4984552b17cfe6
+    path: layers/meta-swupdate
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    commit: 5f9f741193f55bb4bb3c974e913d169dd23e40d3
+    path: layers/meta-openembedded
+    layers:
+      meta-oe:
+      meta-python:
+      meta-networking:
+      meta-filesystems:
+  poky:
+    url: https://git.yoctoproject.org/git/poky
+    commit: 2240b92d62618d6125bd825647392d3bb5a2d038
+    path: layers/meta-poky
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+distro: elk
+target: unset
+machine: unset
+
+bblayers_conf_header:
+    custom-bblayers-conf: |
+        POKY_BBLAYERS_CONF_VERSION = "2"
+
+local_conf_header:
+  elk-audio-os: |
+    DL_DIR ?= "${TOPDIR}/../downloads"
+    # Fixes: an error on systemd-compat-units feature 'usrmerge' 
+    DISTRO_FEATURES += "usrmerge" 
+    # Fixes: an error on libegl-mesa - for raspberrypi/recipes-graphics/userland
+    DISTRO_FEATURES += "opengl" 
+    ELK_AUDIO_OS_VERSION = "1.1.0"
+    PACKAGE_CLASSES ?= "package_ipk"
+    EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+    USER_CLASSES ?= "buildstats"
+    PATCHRESOLVE = "noop"
+    BB_DISKMON_DIRS ??= "\
+      STOPTASKS,${TMPDIR},1G,100K \
+      STOPTASKS,${DL_DIR},1G,100K \
+      STOPTASKS,${SSTATE_DIR},1G,100K \
+      STOPTASKS,/tmp,100M,100K \
+      HALT,${TMPDIR},100M,1K \
+      HALT,${DL_DIR},100M,1K \
+      HALT,${SSTATE_DIR},100M,1K \
+      HALT,/tmp,10M,1K"
+    do_image_complete[deptask] += "do_populate_lic"
+    PACKAGECONFIG:append:pn-qemu-native = " sdl"
+    PACKAGECONFIG:append:pn-nativesdk-qemu = " sdl"
+    CONF_VERSION = "1"
+    SECURITY_STRINGFORMAT = "-Wformat -Wformat-security"
+    INHERIT += "rm_work"
+    LICENSE_FLAGS_ACCEPTED += "commercial synaptics-killswitch"
+ 
+    # By default, mda-vst2 plugins are not installed in the image and SUSHI will not
+    # have VST2 support enabled. If you have access to the VST2 SDK you can enable
+    # both by setting the variable VST2SDK_PATH to the path of the vst2 sdk as
+    # follows:
+    # VST2SDK_PATH = "path/to/the/vst2sdk/in/your/build/machine/"
+    # For example : VST2SDK_PATH = "/home/user/vstsdk2.4"
+    # To disable VST2 support, just define `VST2SDK_PATH` as an empty string.
+    VST2SDK_PATH = ""
