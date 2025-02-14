@@ -6,7 +6,7 @@ header:
 repos:
   meta-elk:
     url: https://github.com/elk-audio/meta-elk.git
-    commit: fca487f15730d1fd35c4308598ff7f0adf57d96e
+    commit: c708d3f8320ba427149c8455b0aedecc8b3842ff
     path: layers/meta-elk
   meta-swupdate:
     url: https://github.com/sbabic/meta-swupdate
