@@ -11,7 +11,7 @@ Please read [KAS documentation](https://kas.readthedocs.io/en/latest/index.html)
 
 ### Building Elk Audio OS 1.1.0 Raspberry Pi 4 image ###
 ```bash
-kas build raspberrypi4/raspberrypi4-elk-audio-os-v1.1.0.yml
+kas build raspberrypi4/raspberrypi4-elk-audio-os-v1.2.1.yml
 ```
 
-Copyright 2017-2025 Elk Audio AB, Stockholm, Sweden.
+Copyright 2017-2026 Elk Audio AB, Stockholm, Sweden.

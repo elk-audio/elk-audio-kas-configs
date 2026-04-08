@@ -1,0 +1,45 @@
+# KAS project file
+header:
+  version: 18
+  includes:
+    - common/elk-audio-os-v1.2.0.yml
+
+machine: raspberrypi4-64
+target: elkpi-audio-os-image
+
+repos:
+  meta-elkpi:
+    url: https://github.com/elk-audio/meta-elkpi.git
+    commit: da024a973857ee7a8a1768f4488d2afb4522915a
+    path: layers/meta-elkpi
+  meta-raspberrypi-elk:
+    url: https://github.com/elk-audio/meta-raspberrypi-elk.git
+    commit: 4958ed145a83d47e08ce64d5648d3b4be8ead3af
+    path: layers/meta-raspberrypi-elk
+  meta-raspberrypi:
+    url: https://github.com/agherzan/meta-raspberrypi.git
+    commit: 2c646d29912dcc873469a57b1c207e1549c5094d
+    path: layers/meta-raspberrypi
+
+local_conf_header:
+  elkpi-conf: |
+    SWU_VERSION = "1.2.0"
+    RPI_KERNEL_DEVICETREE:remove = "broadcom/bcm2711-rpi-400.dtb broadcom/bcm2711-rpi-cm4.dtb"
+    RPI_KERNEL_DEVICETREE_OVERLAYS:remove = "overlays/vc4-kms-dsi-7inch.dtbo"
+    ENABLE_I2C = "1"
+    KERNEL_MODULE_AUTOLOAD:rpi += "i2c-dev"
+    ENABLE_UART = "1"
+    SERIAL_CONSOLES = "57600;ttyS0"
+    RPI_USE_U_BOOT = "1"
+    EXTRA_IMAGE_FEATURES += "debug-tweaks ssh-server-openssh package-management"
+    DISTRO_FEATURES += "user-autostart-service"
+    hostname:pn-base-files = "elk-pi"
+
+    # Uncomment to enable Bluetooth audio streaming (PipeWire + WirePlumber + BlueZ5 SPA)
+    DISTRO_FEATURES:append = " bluetooth-audio"
+
+    # Comment the following for qt image
+    BBMASK += "meta-elkpi/recipes-images/images/elkpi-audio-os-image-qt.bb"
+    BBMASK += "meta-elk/recipes-qt/simple-qt/simple-qt_0.1.bb"
+    BBMASK += "meta-elk/recipes-qt/qt/qtbase_git.bbappend"
+    BBMASK += "meta-elk/recipes-binaries/sensei/sensei_git.bb"
