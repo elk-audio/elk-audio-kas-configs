@@ -9,9 +9,9 @@ which comes with KAS tool and all the required packages installed.
 Otherwise if you already have a machine set up for running bitbake you can install KAS on it.
 Please read [KAS documentation](https://kas.readthedocs.io/en/latest/index.html) for the details.
 
-### Building Elk Audio OS 1.1.0 Raspberry Pi 4 image ###
+### Building Elk Audio OS 1.4.0 Raspberry Pi 4 image ###
 ```bash
-kas build raspberrypi4/raspberrypi4-elk-audio-os-v1.2.1.yml
+kas build raspberrypi4/raspberrypi4-elk-audio-os-v1.4.0.yml
 ```
 
 Copyright 2017-2026 Elk Audio AB, Stockholm, Sweden.
